@@ -2,11 +2,13 @@ class Televisor {
   estaPrendido: boolean; //estas variables internas no pueden ser modificadas desde la clase, para eso se necesitan las funciones
   volumeActual: number;
   channelActual: number;
+  horaActual:Date;
  
-  constructor(on: boolean = false, vol: number = 0, chn: number = 0) {
+  constructor(on: boolean = false, vol: number = 0, chn: number = 0, hora?: Date) {
     this.estaPrendido = on;
     this.volumeActual = vol;
     this.channelActual = chn; 
+    this.horaActual= hora || new Date;
    
   
   } // el constructor es una funcion que permite crear el objeto a partir de los parametros que se les pase, estos parametros se le asignan a las variables internas
@@ -17,43 +19,52 @@ class Televisor {
   }
   volUp(): void { 
     if (!this.estaPrendido) return;
-    if (this.volumeActual >=100)return; 
-    else {this.volumeActual=this.volumeActual + 1;
-  
-    console.log("vol up", this.volumeActual);   
+    if (this.volumeActual <100){
+      this.volumeActual ++;
+      console.log("volumen aumentado:", this.volumeActual);
     }
-  }
+}
+  
   volDown(): void {
     if (!this.estaPrendido) return;
-    if (this.volumeActual <=0)return;
-    this.volumeActual=this.volumeActual- 1;
-    console.log("vol down", this.volumeActual);
+    if (this.volumeActual > 0) {
+      this.volumeActual--;
+      console.log("Volumen disminuido:", this.volumeActual);
+    }
   }
   channelUp(): void {
     if (!this.estaPrendido) return;
-    if (this.channelActual >=99)return;
-    this.channelActual =this.channelActual+1;
-    console.log("channel up", this.channelActual);
+    if (this.channelActual < 99) {
+      this.channelActual++;
+      console.log("Canal aumentado:", this.channelActual);
+    }
   }
   channelDown(): void {
     if (!this.estaPrendido) return;
-    if (this.channelActual <=1)return;
-    this.channelActual=this.channelActual - 1;
-    console.log("channel down", this.channelActual);
+    if (this.channelActual > 1) {
+      this.channelActual--;
+      console.log("Canal disminuido:", this.channelActual);
+    }
   }
   pickChannel(channel: number): void {
     if (!this.estaPrendido) return;
-    this.channelActual = channel;
-    console.log("Cambiaste al canal", this.channelActual);
+    if (channel >= 1 && channel <= 99) {
+      this.channelActual = channel;
+      console.log("Cambiado al canal:", this.channelActual);
+    } else {
+      console.log("Canal inválido.");
+    }
   }
-  /*horaaActual(hora:number): void {
+ 
+  /*HoraActual(hora: Date): void {
     if (!this.estaPrendido) return;
     this.horaActual = hora;
-    console.log("Hora", this.horaActual);
-  } */
+    console.log("Hora actual establecida:", this.horaActual);
+  }*/
   info(): void {
     if (!this.estaPrendido) return;
-    console.log("canal:", this.channelActual, "volumen", this.volumeActual, "hora actual", /*this.horaActual*/);
+    const formatoHora = `${this.horaActual.getHours()}:${this.horaActual.getMinutes()}`;
+    console.log("Canal:", this.channelActual, "Volumen:", this.volumeActual,"Hora actual:", formatoHora);
   }
 }
 
@@ -66,5 +77,4 @@ tv01.channelUp();
 tv01.channelDown();
 tv01.channelDown();
 tv01.pickChannel(10);
-//tv01.horaaActual (22);
 tv01.info();
