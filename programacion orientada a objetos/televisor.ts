@@ -2,13 +2,13 @@ class Televisor {
   private estaPrendido: boolean; //estas variables internas no pueden ser modificadas desde la clase, para eso se necesitan las funciones
   private volumeActual: number;
   private channelActual: number;
-  private horaActual:Date;
+  
  
   constructor(on: boolean = false, vol: number = 0, chn: number = 0, hora?: Date) {
     this.estaPrendido = on;
     this.volumeActual = vol;
     this.channelActual = chn; 
-    this.horaActual= hora || new Date;
+    
    
   
   } // el constructor es una funcion que permite crear el objeto a partir de los parametros que se les pase, estos parametros se le asignan a las variables internas
@@ -35,7 +35,7 @@ class Televisor {
   channelUp(): void {
     if (!this.estaPrendido) return;// sino esta prendido return
 
-    if (this.channelActual >1 && this.channelActual < 99) {
+    if ((this.channelActual > 1) && (this.channelActual < 99)) {
       this.channelActual++;
       console.log("Canal aumentado:", this.channelActual);
     }
@@ -58,10 +58,16 @@ class Televisor {
     this.horaActual = hora;
     console.log("Hora actual establecida:", this.horaActual);
   }*/
+  /*getChannel(): void {
+    console.log (this.channelActual); 
+   }*/
+
   info(): void {
     if (!this.estaPrendido) return;
-    const formatoHora = `${this.horaActual.getHours()}:${this.horaActual.getMinutes()}`;
-    console.log("Canal:", this.channelActual, "Volumen:", this.volumeActual,"Hora actual:", formatoHora);
+    console.log(
+    "Canal:", this.channelActual,
+    "Volumen:", this.volumeActual,
+    "Hora actual:",new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));//metodo para poner hora buscado en mdn
   }
 }
 
