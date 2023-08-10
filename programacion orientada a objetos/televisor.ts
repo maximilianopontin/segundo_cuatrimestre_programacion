@@ -68,7 +68,7 @@ class Televisor {
   }
 }
 
-const tv01 = new Televisor();
+const tv01 = new Televisor(false,20,5);
 tv01.switchOnOff();
 tv01.volUp();
 tv01.volDown();
