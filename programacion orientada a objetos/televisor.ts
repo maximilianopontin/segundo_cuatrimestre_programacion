@@ -1,8 +1,8 @@
 class Televisor {
-  estaPrendido: boolean; //estas variables internas no pueden ser modificadas desde la clase, para eso se necesitan las funciones
-  volumeActual: number;
-  channelActual: number;
-  horaActual:Date;
+  private estaPrendido: boolean; //estas variables internas no pueden ser modificadas desde la clase, para eso se necesitan las funciones
+  private volumeActual: number;
+  private channelActual: number;
+  private horaActual:Date;
  
   constructor(on: boolean = false, vol: number = 0, chn: number = 0, hora?: Date) {
     this.estaPrendido = on;
@@ -33,27 +33,24 @@ class Televisor {
     }
   }
   channelUp(): void {
-    if (!this.estaPrendido) return;
-    if (this.channelActual < 99) {
+    if (!this.estaPrendido) return;// sino esta prendido return
+
+    if (this.channelActual >1 && this.channelActual < 99) {
       this.channelActual++;
       console.log("Canal aumentado:", this.channelActual);
     }
   }
   channelDown(): void {
     if (!this.estaPrendido) return;
-    if (this.channelActual > 1) {
+    if (this.channelActual > 1 && this.channelActual < 99) {
       this.channelActual--;
       console.log("Canal disminuido:", this.channelActual);
     }
   }
   pickChannel(channel: number): void {
     if (!this.estaPrendido) return;
-    if (channel >= 1 && channel <= 99) {
-      this.channelActual = channel;
+    this.channelActual = channel;
       console.log("Cambiado al canal:", this.channelActual);
-    } else {
-      console.log("Canal inválido.");
-    }
   }
  
   /*HoraActual(hora: Date): void {
@@ -68,7 +65,7 @@ class Televisor {
   }
 }
 
-const tv01 = new Televisor(false,20,5);
+const tv01:Televisor = new Televisor();
 tv01.switchOnOff();
 tv01.volUp();
 tv01.volDown();
@@ -78,3 +75,7 @@ tv01.channelDown();
 tv01.channelDown();
 tv01.pickChannel(10);
 tv01.info();
+
+//tv01.volumeActual=10; se puede acceder de afuera a una variable interna 
+//pero conviene encapsular los datos (modoficadores de acceso: private) para proteger los datos 
+//
