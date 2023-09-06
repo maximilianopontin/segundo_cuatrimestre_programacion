@@ -4,7 +4,7 @@
   "description": "descripcion del paquete",
   "main": "index.js",
   "scripts": {
-    "start": "ejemplo.js",
+    "start": "node ejemplo.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "maxi pontin",
