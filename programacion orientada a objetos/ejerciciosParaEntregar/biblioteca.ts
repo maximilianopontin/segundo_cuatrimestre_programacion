@@ -27,7 +27,7 @@ class LibraryItem {
     this.title = title;
     this.year = year;
   }
-  //funciones para modificar titulo y añoo
+  //funciones para modificar titulo y año
   public setTitle(title: string): void {
     this.title = title;
   }
