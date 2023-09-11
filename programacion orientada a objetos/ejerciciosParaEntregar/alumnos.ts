@@ -1,2 +1,0 @@
-//modelar un sistema educativo donde los profesores tengan un listado de alumnos. cada alumno debe saber su nota e 
-//informar si esta aprobado o no (mas de 7), la escuela debe tener un registro de los alumnos y maestros y debe poder matricular/contratar y expulsar/ despedir a los mismos
