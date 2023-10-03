@@ -1,0 +1,19 @@
+{
+  "name": "trabajointegrador",
+  "version": "1.0.0",
+  "description": "tp sistema de gestion biblioteca",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "maximiliano pontin",
+  "license": "ISC",
+  "dependencies": {
+    "-": "^0.0.1",
+    "@types/node": "^20.7.0",
+    "D": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
