@@ -1,4 +1,6 @@
 
+import { FileManager } from "./claseFileManager";
+
 export class LoanRecord {
     private userName: string;
     private loanTitle: string;
@@ -8,9 +10,8 @@ export class LoanRecord {
     constructor(userName: string, loanTitle: string, dueDate: Date, loanDate: Date) {
         this.userName = userName;
         this.loanTitle = loanTitle;
-        this.dueDate = dueDate;
         this.loanDate = loanDate;
-        this.dueDate.setDate(this.loanDate.getDate() + 7); 
+        this.dueDate = dueDate;
     }
 
     getUserName(): string {
@@ -26,5 +27,9 @@ export class LoanRecord {
     getDueDate(): Date {
         return this.dueDate;
     }
-
 }
+
+
+
+
+

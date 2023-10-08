@@ -11,9 +11,15 @@
   "dependencies": {
     "-": "^0.0.1",
     "@types/node": "^20.7.0",
-    "D": "^1.0.0"
+    "D": "^1.0.0",
+    "@types/readline-sync": "^1.4.5"
   },
+
   "devDependencies": {
-    "typescript": "^5.2.2"
-  }
+    "@types/node": "^20.5.9",
+    "readline-sync": "^1.4.10",
+  
+  "typescript": "^5.2.2"
+  
+}
 }

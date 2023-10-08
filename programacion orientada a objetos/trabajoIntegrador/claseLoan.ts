@@ -10,11 +10,11 @@ export class Loan {
   private loanDate: Date; //fecha de prestamo
   private dueDate: Date;//fecha de devolucion
 
-  constructor(item: LibraryItem, user: User) {
+  constructor(item: LibraryItem, user: User, loandDate : Date) {
     this.item = item;
     this.user = user;
-    this.loanDate = new Date();
-    this.dueDate = new Date();
+    this.loanDate = loandDate;
+    this.dueDate = loandDate;
     this.dueDate.setDate(this.loanDate.getDate() + 7); //a la fecha de prestamo le sumamos 7 dias que son los dias para su devolucion
   }
   //ponemos los metodos por separado, porque quizas necesitemos buscar solo una informacion y ejecutamos esa funcion 

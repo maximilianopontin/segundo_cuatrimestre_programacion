@@ -2,8 +2,9 @@
 import { LibraryItem } from "./claseLibraryItem";
 import { User } from "./claseUser";
 import { Loan } from "./claseLoan";
-import { LoanRecord } from "./registroPrestamos";
+import { LoanRecord } from "./claseLoanRecord";
 import * as fs from "fs";
+import { FileManager } from "./claseFileManager";
 
 export class Library {
   private items: LibraryItem[]; //arrays de tipo libraryitem
@@ -26,7 +27,7 @@ export class Library {
     this.users.push(user);
   }
 
-  loanItem(item: LibraryItem, user: User): void {
+  loanItem(item: LibraryItem, user: User, loandDate: Date = new Date()): void {//parametro loan date opcional
     if (!this.isUserValid(user)) {
       console.log("Usuario no registrado");
       return;
@@ -35,7 +36,7 @@ export class Library {
       console.log("Usuario cancelado");
       return;
     }
-    if (user.isPenalized()) {
+    if (user.isPenalized(loandDate)) {
       console.log("Usuario penalizado");
       return;
 
@@ -48,10 +49,10 @@ export class Library {
     }
     existingItem.markAsUnavailable(); //cambia el estado a false, no esta disponible
 
-    const loan = new Loan(existingItem, user); //creamos nuevo prestamo
+    const loan = new Loan(existingItem, user, loandDate); //creamos nuevo prestamo
     this.loans.push(loan); //cargo el prestamo en el arreglo loan
 
-    //agrega las propiedades de titulo, fecha y nombre a cada prestamo
+    //crea un nuevo registro de prestamo con las propiedades de titulo, fecha y nombre a cada prestamo
     this.addLoanRecord(user, existingItem);
 
     // Guardar registros de préstamos en un archivo
@@ -64,7 +65,8 @@ export class Library {
     );
 
   }
-  //método para agregar registros de préstamos:
+
+  //método para agregar propiedades a registros de préstamos:
   addLoanRecord(user: User, item: LibraryItem): void {
     const loan = this.findActiveLoan(item, user);
     if (loan) {
@@ -72,7 +74,7 @@ export class Library {
       const loanTitle = item.getTitle();
       const loanDate = loan.getLoanDate();
       const dueDate = loan.getDueDate();
-      const loanRecord = new LoanRecord(userName, loanTitle, loanDate, dueDate);
+      const loanRecord = new LoanRecord(userName, loanTitle, dueDate, loanDate);
       this.loanRecords.push(loanRecord);
     }
   }
@@ -81,9 +83,12 @@ export class Library {
     const data = JSON.stringify(this.loanRecords, null, 2);
     fs.writeFileSync(filename, data, 'utf8');
   }
-
+  //imprime por consola el registro de prestamos totales
+  printLoanRecords() {
+    console.log("Lista de Prestamos: ", FileManager.readLoans());
+  }
   // Método para eliminar un libro o revista de la biblioteca
-  /* removeItem(item: LibraryItem): void {
+  removeItem(item: LibraryItem): void {
     const index = this.items.findIndex((i) => i === item);//se busca el indice del item pasado como argumento en el arreglo de la biblioteca
     //  si el elemento i es igual al item que se pasó como argumento, index almacenará la posición del elemento en el arreglo; de lo contrario, será -1.
     if (index !== -1) { //no es igual a -1, lo que significa que se encontró el item en la biblioteca.
@@ -93,19 +98,27 @@ export class Library {
       console.log(`"${item.getTitle()}" no se encontró en la biblioteca.`);
     }
   }
- // Método para eliminar un usuario de la biblioteca
- removeUser(user: User): void {
-  const index = this.users.findIndex((i) => i === user);
-  if (index !== -1) {
-    this.users.splice(index, 1);
-    console.log(`${user.getName()} ha sido eliminado como usuario de la biblioteca.`);
-  } else {
-    console.log(`${user.getName()} no se encontró como usuario de la biblioteca.`);
+  // Método para eliminar un usuario de la biblioteca
+  removeUser(user: User): void {
+    const index = this.users.findIndex((u) => u === user);
+    if (index !== -1) {
+      this.loans = this.loans.filter((resLoan) => resLoan.getUser() !== user); //si el usuario tiene un prestamo vigente, me permite filtrarlo 
+      this.users.splice(index, 1);
+      console.log(`${user.getName()} ha sido eliminado como usuario de la biblioteca.`);
+    } else {
+      console.log(`${user.getName()} no se encontró como usuario de la biblioteca.`);
+    }
   }
-}*/
+  removeLoan(item: LibraryItem, user: User): void {
+    const loan = this.findActiveLoan(item, user);
+    if (loan) {
+      this.removeLoanActive(loan);
+      console.log(`El prestamo de item: ${item.getTitle()}, del usuario ${user.getName()} ha sido eliminado`);
 
+
+    }
+  }
   //Se puede retirar un item. Si un usuario no está registrado o si el ítem no está disponible la operación se cancela. Se puede devolver un ítem.
-
   returnItem(item: LibraryItem, user: User, returnDate: Date): void { //fecha de devolucion returndate
     const loan = this.findActiveLoan(item, user);
     if (!loan) {
@@ -131,11 +144,11 @@ export class Library {
         console.log(`${user.getName()} devolvió "${item.getTitle()}" tarde. Penalización: ${lateFee} puntos.`);
 
         if (user.getScoring() >= 6) {
-          user.markAsPenalized(returnDate); // fecha de devolucion de item
+
           console.log(" Usuario penalizado por 1 semana queda inhabilitado para retirar items.");
+          user.markAsPenalized(returnDate); // fecha de devolucion de item
         }
       }
-
 
     } else if (user.getScoring() > 0) { //devolucion a tiempo con puntos de score
       user.decreaseScoring(1);
@@ -145,13 +158,12 @@ export class Library {
       console.log(`${user.getName()} devolvió "${item.getTitle()}" a tiempo.`)
     }
 
-    this.removeLoan(loan); //elimino el prestamo de la lista de prestamos activos
+    this.removeLoanActive(loan); //elimino el prestamo de la lista de prestamos activos
     console.log(`${user.getName()} devolvió "${item.getTitle()}" en la fecha "${returnDate.toLocaleDateString()}"`);
   }
 
-  //metodos
 
-  private removeLoan(loan: Loan) {
+  private removeLoanActive(loan: Loan) {
     this.loans = this.loans.filter((resLoan) => resLoan !== loan); // se modifica la lista de arreglos de prestamos, eliminando el prestamo 
     //porque ya se devolvio.
   }

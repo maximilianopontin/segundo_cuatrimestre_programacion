@@ -62,15 +62,15 @@ export class User {
   public markAsPenalized(date: Date): void {
     this.penalized = date;
   }
-  public isPenalized(): boolean {
-    const endPenalization = new Date(this.penalized); //crea copia de fecha de peanlizacion
+ 
+  public isPenalized(loanDate: Date = new Date ): boolean {
+    const endPenalization = new Date(this.penalized); //crea copia de fecha de peanlizacion //return date
     endPenalization.setDate(endPenalization.getDate() + 7); //fecha de penalizacion mas 7 dias 
-    const now = new Date();
-    if (endPenalization < now) {
+    if (loanDate > endPenalization) {
       return true;
     } else {
       return false;
     }
-    // (date penalized + 7 days) menor new date= penalized 
+    
   }
 }
