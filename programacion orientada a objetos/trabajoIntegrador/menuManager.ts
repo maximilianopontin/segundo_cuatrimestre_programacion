@@ -7,10 +7,8 @@ import { Magazine } from "./claseMagazine";
 import { LoanRecord } from "./claseLoanRecord";
 
 import * as rs from "readline-sync";
-/*
+
 export class MenuManager {
-
-
 
   readLoanRecords() {
     const library = new Library();
@@ -45,6 +43,41 @@ export class MenuManager {
   }
 
 
+  readUser() {
+    const user01 = new User("Maximiliano Pontin", { street: "Passo", number: 675, apartment: "2" }, "123-444-555");
+    const user02 = new User("Raul Lopez", { street: "Av. Belgrano", number: 235, apartment: "4C" }, "555-555-555");
+    console.log(user01, user02);
+
+    rs.keyInPause();
+  }
+
+  createUser() {
+    const library = new Library();
+    const user02 = new User("Raul Lopez", { street: "Av. Belgrano", number: 235, apartment: "4C" }, "555-555-555");
+    const book01 = new Book("El tunel", 1948, "Ernesto, Sabato");
+    library.addUser(user02); //agrega usuario 02
+    library.addItem(book01);
+    library.loanItem(book01, user02);
+
+
+    rs.keyInPause();
+
+
+  }
+  updateUser() { }
+
+  deleteUser() {
+    const library = new Library();
+    const user02 = new User("Raul Lopez", { street: "Av. Belgrano", number: 235, apartment: "4C" }, "555-555-555");
+    const book01 = new Book("El tunel", 1948, "Ernesto, Sabato");
+    library.addUser(user02);
+    library.addItem(book01);
+    library.loanItem(book01, user02);
+    library.removeLoan(book01, user02);
+
+    rs.keyInPause();
+  }
+
   menuu() {
     while (true) {
       console.clear()
@@ -60,6 +93,7 @@ export class MenuManager {
         case 2:
           this.deleteLoan();
           break;
+
         default:
           console.log("adios");
           return;
@@ -68,12 +102,12 @@ export class MenuManager {
   }
 
   menuOptions = [
-    // "listar revistas", "cargar revista", "delete magazine", "update revista",
+    //"Read User", "Create User", "Update User", "Delete Existing User",
+    // "Read magazine", " Create Magazine", "Update Magazine" "Delete Magazine", "
+    // "Read Book", "Create Book", "Update Book", "Delete Book",
     "Read LoanRecord", "Create Loan", "Delete Existing Loan",
-    //   "listar libros", "usuario libro",  "cargar libro","delete book",  
-    // "listar usuarios", "create user", "delete usuario","update usuario", 
 
   ]
 }
 const manager = new MenuManager();
-manager.menuu();*/
+manager.menuu();

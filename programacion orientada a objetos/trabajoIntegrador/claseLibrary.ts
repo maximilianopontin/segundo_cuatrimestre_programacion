@@ -27,6 +27,22 @@ export class Library {
     this.users.push(user);
   }
 
+  // Método para listar usuarios
+  listUsers(): void {
+    console.log("Lista de Usuarios:");
+    this.users.forEach((user) => {
+      console.log(`- ${user.getName()}`);
+    });
+  }
+
+  // Método para listar elementos
+  listItems(): void {
+    console.log("Lista de Elementos:");
+    this.items.forEach((item) => {
+      console.log(`- ${item.getTitle()}`);
+    });
+  }
+
   loanItem(item: LibraryItem, user: User, loandDate: Date = new Date()): void {//parametro loan date opcional
     if (!this.isUserValid(user)) {
       console.log("Usuario no registrado");
