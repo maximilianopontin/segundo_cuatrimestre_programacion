@@ -10,7 +10,7 @@ export class Loan {
   private loanDate: Date; //fecha de prestamo
   private dueDate: Date;//fecha de devolucion
 
-  constructor(item: LibraryItem, user: User, loandDate : Date) {
+  constructor(item: LibraryItem, user: User, loandDate: Date) {
     this.item = item;
     this.user = user;
     this.loanDate = loandDate;

@@ -13,4 +13,4 @@ export class Book extends LibraryItem {
   getAuthor() {
     return this.author;
   }
-}
+} 

@@ -22,7 +22,7 @@ export class LoanRecord {
         return this.loanTitle;
     }
     getLoanDate(): Date {
-        return this.loanDate;
+        return this.loanDate; 
     }
     getDueDate(): Date {
         return this.dueDate;
