@@ -1,0 +1,17 @@
+button {
+    border: none;
+    width: 100px;
+    height: 60px;
+    font-size: 1.4rem;
+    font-weight:700;
+    border-radius: 7px;
+    background-color: brown;
+    color: white;
+    text-transform: uppercase;
+}
+
+section {
+text-align: center;
+margin:3rem 0;
+
+}

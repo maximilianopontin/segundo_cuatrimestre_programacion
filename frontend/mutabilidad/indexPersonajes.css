@@ -1,0 +1,27 @@
+#name-personajes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+
+}
+
+article {
+    padding: 1rem;
+    box-shadow: 3px 3px 5px;
+    border-radius: 7px;
+    text-align: center;
+    width: 300px;
+
+}
+
+article img {
+    width: 50%;
+}
+
+h1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-decoration: underline;
+}
