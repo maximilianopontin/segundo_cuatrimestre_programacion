@@ -4,9 +4,9 @@ import Input from './components/input';
 import { v4 as uuidv4 } from "uuid";
 import { TbTrashOff } from "react-icons/tb";
 import { getItems } from './utils/getItems';
-import { Historial } from './components/historias';
+
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-import {Inicio}  from './components/inicio.jsx';
+
 
 //LISTA DE TAREAS
 function App() {
@@ -71,17 +71,6 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <nav>
-          <Link to="">Inicio</Link>
-          <Link to="/componentes/historias">Historial</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/componentes/historias" element={<Historial />} />
-        </Routes>
-
-      </BrowserRouter>
 
       <main className='container'>
         <header>
@@ -114,7 +103,7 @@ function App() {
 
       </main>
 
-      <footer>@listaDeTareas</footer>
+   
     </>
   );
 
