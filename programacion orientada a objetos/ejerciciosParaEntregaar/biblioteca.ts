@@ -191,6 +191,29 @@ class Library {
         .toLocaleDateString()}`
     );
   }
+   // Método para eliminar un libro o revista de la biblioteca
+   removeItem(item: LibraryItem): void {
+    const index = this.items.findIndex((i) => i === item);//se busca el indice del item pasado como argumento en el arreglo de la biblioteca
+    //  si el elemento i es igual al item que se pasó como argumento, index almacenará la posición del elemento en el arreglo; de lo contrario, será -1.
+    if (index !== -1) { //no es igual a -1, lo que significa que se encontró el item en la biblioteca.
+      this.items.splice(index, 1); ///eliminar un elemento en la posición index del arreglo items. El 1 indica que se eliminará solo un elemento en esa posición.
+      console.log(`"${item.getTitle()}" ha sido eliminado de la biblioteca.`);
+    } else {
+      console.log(`"${item.getTitle()}" no se encontró en la biblioteca.`);
+    }
+  }
+ // Método para eliminar un usuario de la biblioteca
+ removeUser(user: User): void {
+  const index = this.users.findIndex((i) => i === user);
+  if (index !== -1) {
+    this.users.splice(index, 1);
+    console.log(`${user.getName()} ha sido eliminado como usuario de la biblioteca.`);
+  } else {
+    console.log(`${user.getName()} no se encontró como usuario de la biblioteca.`);
+  }
+}
+
+//Se puede retirar un item. Si un usuario no está registrado o si el ítem no está disponible la operación se cancela. Se puede devolver un ítem.
 
   returnItem(item: LibraryItem, user: User): void {
     const loan = this.findActiveLoan(item, user);
@@ -245,7 +268,6 @@ const user02 = new User(
   },
   "555-555-555"
 );
-//Se puede retirar un item. Si un usuario no está registrado o si el ítem no está disponible la operación se cancela. Se puede devolver un ítem.
 
 
 library.addItem(book01);
@@ -257,6 +279,7 @@ library.addUser(user02); //agrega usuario
 library.loanItem(book01, user02); //item no disponible
 library.returnItem(book01, user01); //ahora vuelve a estar disponible
 library.loanItem(book01, user02); //OK
-
+library.removeItem (book01);
+library.removeUser(user01);
 
 
